@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -22,6 +23,10 @@ class Kernel extends BaseKernel
             if ($envs[$this->environment] ?? $envs['all'] ?? false) {
                 yield new $class();
             }
+        }
+        if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
+            // ...
+            $bundles[] = new DoctrineFixturesBundle();
         }
     }
 

@@ -1,0 +1,50 @@
+language: php
+sudo: false
+
+services:
+- mysql
+
+matrix:
+  fast_finish: true
+  include:
+  - php: 7.2
+  - php: 7.3
+  - php: 7.4snapshot
+  allow_failures:
+  - php: 7.4snapshot
+
+before_install:
+- '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || phpenv config-rm xdebug.ini'
+- composer self-update
+
+install:
+- composer install --dev
+- wget https://get.symfony.com/cli/installer -O - | bash
+- cp .env.test .env
+- php bin/console doctrine:database:create --env=test
+- php bin/console doctrine:schema:create --env=test
+- php bin/console doctrine:fixtures:load -n --env=test
+
+script:
+- phpunit
+- '[[ "$TRAVIS_PHP_VERSION" == "7.4snapshot" ]] || ./vendor/bin/php-cs-fixer fix --diff
+  --dry-run -v'
+- "./bin/console lint:yaml config"
+- "./bin/console lint:twig templates"
+- "./bin/console lint:xliff translations"
+- "~/.symfony/bin/symfony security:check"
+- "./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction"
+
+addons:
+  ssh_known_hosts: ta70.mckay1717.eu
+
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_d41575748ce2_key -iv $encrypted_d41575748ce2_iv -in deploy_rsa.enc -out ~\/deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ~\/deploy_rsa
+- ssh-add ~\/deploy_rsa
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ssh -i deploy_rsa -t travis@ta70.mckay1717.eu 'touch start_build'
