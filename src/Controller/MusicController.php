@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Music;
 use App\Form\MusicForm;
 
@@ -14,7 +14,7 @@ use App\Form\MusicForm;
  * Music controller.
  * @Route("/musics", name="music_")
  */
-class MusicController extends FOSRestController
+class MusicController extends AbstractFOSRestController
 {
     /**
      * Lists all Musics.
@@ -27,6 +27,41 @@ class MusicController extends FOSRestController
         $repository = $this->getDoctrine()->getRepository(Music::class);
         $musics = $repository->findall();
         return $this->handleView($this->view($musics));
+    }
+
+    /**
+     * Lists all Musics.
+     * @Rest\Get("/{id}")
+     *
+     * @return Response
+     */
+    public function getOne($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Music::class);
+        $music = $repository->find($id);
+        return $this->handleView($this->view($music));
+    }
+
+    /**
+     * Lists all Musics.
+     * @Rest\Post("")
+     *
+     * @return Response
+     */
+    public function createOne(Request $req)
+    {
+        $file= $req->request->get('file');
+        $title= $req->request->get('title');
+        print_r($title);
+
+        $music = new Music();
+        $music->setFile($file);
+        $music->setTitle($title);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($music);
+        $entityManager->flush();
+        return new Response("",200);
     }
 //
 //    /**

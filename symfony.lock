@@ -105,6 +105,9 @@
             "config/packages/fos_rest.yaml"
         ]
     },
+    "fzaninotto/faker": {
+        "version": "v1.8.0"
+    },
     "hoa/compiler": {
         "version": "3.17.08.08"
     },
@@ -167,6 +170,9 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "liip/functional-test-bundle": {
+        "version": "3.0.0"
+    },
     "nikic/php-parser": {
         "version": "v4.2.2"
     },
@@ -197,6 +203,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/browser-kit": {
+        "version": "v4.3.1"
+    },
     "symfony/cache": {
         "version": "v4.3.1"
     },
@@ -226,6 +235,9 @@
         "version": "v4.3.1"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.3.1"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.3.1"
     },
     "symfony/dotenv": {
