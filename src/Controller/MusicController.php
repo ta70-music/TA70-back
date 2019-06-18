@@ -63,29 +63,24 @@ class MusicController extends AbstractFOSRestController
         $entityManager->flush();
         return new Response("",200);
     }
-//
-//    /**
-//     * Create Movie.
-//     * @Rest\Post("/movie")
-//     *
-//     * @return Response
-//     */
-//    public function postMovieAction(Request $request)
-//    {
-//        $movie = new Movie();
-//        $form = $this->createForm(MovieType::class, $movie);
-//
-//        $data = json_decode($request->getContent(), true);
-//        $form->submit($data);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($movie);
-//            $em->flush();
-//            return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_CREATED));
-//        }
-//
-//        return $this->handleView($this->view($form->getErrors()));
-//    }
+
+    /**
+     * Lists all Musics.
+     * @Rest\Put("/{id}")
+     *
+     * @return Response
+     */
+    public function updateOne(Request $request, $id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Music::class);
+        $music = $repository->find($id);
+        $title = $request->request->get('title');
+        $file = $request->request->get('file');
+        $music->setFile($file);
+        $music->setTitle($title);
+        $this->getDoctrine()->getManager()->flush();
+        return new Response('', 200);
+
+    }
 
 }

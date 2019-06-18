@@ -157,3 +157,4 @@ modules.xml
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 .env.local
+purge.sh

@@ -3,8 +3,12 @@ namespace Acme\Bundle\ApiBundle\Tests\Controller\Rest;
 
 
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\Music;
 use App\Repository\MusicRepository;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use function PHPSTORM_META\type;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,12 +32,11 @@ class MusicTest extends WebTestCase
 
     public function testShouldGetOne(){
         self::bootKernel();
-
         // returns the real and unchanged service container
         $container = self::$kernel->getContainer();
         // gets the special container that allows fetching private services
         $container = self::$container;
-        $music = self::$container->get('doctrine')->getRepository(Music::class)->find(1);
+        $music = $container->get('doctrine')->getRepository(Music::class)->find(1);
 
         $client = static::createClient();
         $client->request('GET', '/musics/1');
@@ -57,9 +60,27 @@ class MusicTest extends WebTestCase
             'title' => 'test',
             'file' => 'test'
         ]);
-        $music = self::$container->get('doctrine')->getRepository(Music::class)->find(4);
+        $musics = self::$container->get('doctrine')->getRepository(Music::class)->findAll();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals($music->getTitle(), 'test');
-        $this->assertEquals($music->getFile(), 'test');
+        $this->assertEquals(3, sizeof($musics));
+    }
+
+    public function testShouldBeUpdate(){
+        $client = static::createClient();
+        self::bootKernel();
+
+        // returns the real and unchanged service container
+        $container = self::$kernel->getContainer();
+        // gets the special container that allows fetching private services
+        $container = self::$container;
+
+        $client->request('PUT', '/musics/1', [
+            'title' => 'test2',
+            'file' => 'test2'
+        ]);
+        $music = self::$container->get('doctrine')->getRepository(Music::class)->find(1);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals('test2', $music->getTitle());
+        $this->assertEquals('test2', $music->getFile());
     }
 }
