@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Application\DTO;
+
+/**
+ * Class MusicDTO
+ * @package App\Application\DTO
+ */
+final class MusicDTO
+{
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $content;
+
+    /**
+     * MusicDTO constructor.
+     * @param string $title
+     * @param string $content
+     */
+    public function __construct(string $title = '', string $content = '')
+    {
+        $this->title = $title;
+        $this->content = $content;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+}
