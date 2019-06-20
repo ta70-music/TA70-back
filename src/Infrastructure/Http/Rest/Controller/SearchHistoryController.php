@@ -42,6 +42,8 @@ final class SearchHistoryController extends FOSRestController
      */
     public function postSearchHistory(SearchHistoryDTO $searchHistoryDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $searchHistory = $this->searchHistoryService->addSearchHistory($searchHistoryDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -57,6 +59,8 @@ final class SearchHistoryController extends FOSRestController
      */
     public function getSearchHistory(int $searchHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $searchHistory = $this->searchHistoryService->getSearchHistory($searchHistoryId);
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the request object
@@ -70,28 +74,14 @@ final class SearchHistoryController extends FOSRestController
      */
     public function getSearchHistorys(): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $searchHistorys = $this->searchHistoryService->getAllSearchHistorys();
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the collection of searchHistory object
         return View::create($searchHistorys, Response::HTTP_OK);
     }
 
-    /**
-     * Replaces SearchHistory resource
-     * @Rest\Put("/searchHistorys/{id}")
-     * @ParamConverter("searchHistoryDTO", converter="fos_rest.request_body")
-     * @param int $searchHistoryId
-     * @param SearchHistoryDTO $searchHistoryDTO
-     * @return View
-     * @throws \Doctrine\ORM\EntityNotFoundException
-     */
-    public function putSearchHistory(int $searchHistoryId, SearchHistoryDTO $searchHistoryDTO): View
-    {
-        $searchHistory = $this->searchHistoryService->updateSearchHistory($searchHistoryId, $searchHistoryDTO);
-
-        // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
-        return View::create($searchHistory, Response::HTTP_OK);
-    }
 
     /**
      * Removes the SearchHistory resource
@@ -102,6 +92,8 @@ final class SearchHistoryController extends FOSRestController
      */
     public function deleteSearchHistory(int $searchHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->searchHistoryService->deleteSearchHistory($searchHistoryId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.

@@ -42,6 +42,7 @@ final class CategoryController extends FOSRestController
      */
     public function postCategory(CategoryDTO $categoryDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $category = $this->categoryService->addCategory($categoryDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -87,6 +88,7 @@ final class CategoryController extends FOSRestController
      */
     public function putCategory(int $categoryId, CategoryDTO $categoryDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $category = $this->categoryService->updateCategory($categoryId, $categoryDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
@@ -102,7 +104,9 @@ final class CategoryController extends FOSRestController
      */
     public function deleteCategory(int $categoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $this->categoryService->deleteCategory($categoryId);
+        //TODO: Check OWNER
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.
         return View::create([], Response::HTTP_NO_CONTENT);

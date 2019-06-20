@@ -42,6 +42,7 @@ final class MessageController extends FOSRestController
      */
     public function postMessage(MessageDTO $messageDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $message = $this->messageService->addMessage($messageDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -57,6 +58,7 @@ final class MessageController extends FOSRestController
      */
     public function getMessage(int $messageId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $message = $this->messageService->getMessage($messageId);
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the request object
@@ -70,6 +72,7 @@ final class MessageController extends FOSRestController
      */
     public function getMessages(): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $messages = $this->messageService->getAllMessages();
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the collection of message object
@@ -87,6 +90,8 @@ final class MessageController extends FOSRestController
      */
     public function putMessage(int $messageId, MessageDTO $messageDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $message = $this->messageService->updateMessage($messageId, $messageDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
@@ -102,6 +107,8 @@ final class MessageController extends FOSRestController
      */
     public function deleteMessage(int $messageId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->messageService->deleteMessage($messageId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.

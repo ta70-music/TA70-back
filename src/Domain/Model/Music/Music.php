@@ -30,10 +30,6 @@ class Music
      */
     private $File;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="musics")
-     */
-    private $User;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Domain\Model\ListenHistory\ListenHistory", inversedBy="musics")
@@ -87,31 +83,7 @@ class Music
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUser(): Collection
-    {
-        return $this->User;
-    }
 
-    public function addUser(User $user): self
-    {
-        if (!$this->User->contains($user)) {
-            $this->User[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->User->contains($user)) {
-            $this->User->removeElement($user);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|ListenHistory[]

@@ -42,6 +42,8 @@ final class ListenHistoryController extends FOSRestController
      */
     public function postListenHistory(ListenHistoryDTO $listenHistoryDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            //TODO Check User
         $listenHistory = $this->listenHistoryService->addListenHistory($listenHistoryDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -57,6 +59,8 @@ final class ListenHistoryController extends FOSRestController
      */
     public function getListenHistory(int $listenHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $listenHistory = $this->listenHistoryService->getListenHistory($listenHistoryId);
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the request object
@@ -70,6 +74,8 @@ final class ListenHistoryController extends FOSRestController
      */
     public function getListenHistorys(): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $listenHistorys = $this->listenHistoryService->getAllListenHistorys();
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the collection of listenHistory object
@@ -87,6 +93,8 @@ final class ListenHistoryController extends FOSRestController
      */
     public function putListenHistory(int $listenHistoryId, ListenHistoryDTO $listenHistoryDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $listenHistory = $this->listenHistoryService->updateListenHistory($listenHistoryId, $listenHistoryDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
@@ -102,6 +110,8 @@ final class ListenHistoryController extends FOSRestController
      */
     public function deleteListenHistory(int $listenHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->listenHistoryService->deleteListenHistory($listenHistoryId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model\Album;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,11 @@ class Album
      */
     private $Image;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="musics")
+     */
+    private $User;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,31 @@ class Album
     public function setIMage(string $IMage): self
     {
         $this->Image = $IMage;
+
+        return $this;
+    }
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->User;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->User->contains($user)) {
+            $this->User[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->User->contains($user)) {
+            $this->User->removeElement($user);
+        }
 
         return $this;
     }

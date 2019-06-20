@@ -42,6 +42,7 @@ final class MusicController extends FOSRestController
      */
     public function postMusic(MusicDTO $musicDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $music = $this->musicService->addMusic($musicDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -87,6 +88,8 @@ final class MusicController extends FOSRestController
      */
     public function putMusic(int $musicId, MusicDTO $musicDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $music = $this->musicService->updateMusic($musicId, $musicDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
@@ -102,6 +105,8 @@ final class MusicController extends FOSRestController
      */
     public function deleteMusic(int $musicId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->musicService->deleteMusic($musicId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.

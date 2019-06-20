@@ -42,6 +42,8 @@ final class SalonController extends FOSRestController
      */
     public function postSalon(SalonDTO $salonDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $salon = $this->salonService->addSalon($salonDTO);
 
         // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
@@ -87,6 +89,8 @@ final class SalonController extends FOSRestController
      */
     public function putSalon(int $salonId, SalonDTO $salonDTO): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $salon = $this->salonService->updateSalon($salonId, $salonDTO);
 
         // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
@@ -102,6 +106,8 @@ final class SalonController extends FOSRestController
      */
     public function deleteSalon(int $salonId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->salonService->deleteSalon($salonId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.

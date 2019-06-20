@@ -33,20 +33,6 @@ final class LoginHistoryController extends FOSRestController
         $this->loginHistoryService = $loginHistoryService;
     }
 
-    /**
-     * Creates an LoginHistory resource
-     * @Rest\Post("/loginHistorys")
-     * @ParamConverter("loginHistoryDTO", converter="fos_rest.request_body")
-     * @param LoginHistoryDTO $loginHistoryDTO
-     * @return View
-     */
-    public function postLoginHistory(LoginHistoryDTO $loginHistoryDTO): View
-    {
-        $loginHistory = $this->loginHistoryService->addLoginHistory($loginHistoryDTO);
-
-        // In case our POST was a success we need to return a 201 HTTP CREATED response with the created object
-        return View::create($loginHistory, Response::HTTP_CREATED);
-    }
 
     /**
      * Retrieves an LoginHistory resource
@@ -57,6 +43,8 @@ final class LoginHistoryController extends FOSRestController
      */
     public function getLoginHistory(int $loginHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $loginHistory = $this->loginHistoryService->getLoginHistory($loginHistoryId);
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the request object
@@ -70,28 +58,14 @@ final class LoginHistoryController extends FOSRestController
      */
     public function getLoginHistorys(): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $loginHistorys = $this->loginHistoryService->getAllLoginHistorys();
 
         // In case our GET was a success we need to return a 200 HTTP OK response with the collection of loginHistory object
         return View::create($loginHistorys, Response::HTTP_OK);
     }
 
-    /**
-     * Replaces LoginHistory resource
-     * @Rest\Put("/loginHistorys/{id}")
-     * @ParamConverter("loginHistoryDTO", converter="fos_rest.request_body")
-     * @param int $loginHistoryId
-     * @param LoginHistoryDTO $loginHistoryDTO
-     * @return View
-     * @throws \Doctrine\ORM\EntityNotFoundException
-     */
-    public function putLoginHistory(int $loginHistoryId, LoginHistoryDTO $loginHistoryDTO): View
-    {
-        $loginHistory = $this->loginHistoryService->updateLoginHistory($loginHistoryId, $loginHistoryDTO);
-
-        // In case our PUT was a success we need to return a 200 HTTP OK response with the object as a result of PUT
-        return View::create($loginHistory, Response::HTTP_OK);
-    }
 
     /**
      * Removes the LoginHistory resource
@@ -102,6 +76,8 @@ final class LoginHistoryController extends FOSRestController
      */
     public function deleteLoginHistory(int $loginHistoryId): View
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //TODO Check User
         $this->loginHistoryService->deleteLoginHistory($loginHistoryId);
 
         // In case our DELETE was a success we need to return a 204 HTTP NO CONTENT response. The object is deleted.
