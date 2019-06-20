@@ -2,6 +2,8 @@
 
 namespace App\Domain\Model\Album;
 
+use App\Domain\Model\Music\Music;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +29,11 @@ class Album
      * @ORM\Column(type="string", length=255)
      */
     private $Image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Music\Music", inversedBy="albums")
+     */
+    private $music;
 
     public function getId(): ?int
     {
@@ -55,5 +62,17 @@ class Album
         $this->Image = $IMage;
 
         return $this;
+    }
+
+    public function getMusic(): ?Music
+    {
+        return $this->music;
+    }
+
+    public function setMusic(?Music $music): self
+    {
+        $this->music = $music;
+
+        return $music;
     }
 }
