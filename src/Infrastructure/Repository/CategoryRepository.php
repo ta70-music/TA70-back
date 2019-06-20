@@ -2,49 +2,71 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Category;
+use App\Domain\Model\Category\Category;
+use App\Domain\Model\Category\CategoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Category|null find($id, $lockMode = null, $lockVersion = null)
- * @method Category|null findOneBy(array $criteria, array $orderBy = null)
- * @method Category[]    findAll()
- * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class CategoryRepository
+ * @package App\Infrastructure\Repository
  */
-class CategoryRepository extends ServiceEntityRepository
+final class CategoryRepository implements CategoryRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * CategoryRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Category::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $categoryId
+     * @return Category
+     */
+    public function findById(int $categoryId): ?Category
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($categoryId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Category
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param Category $category
+     */
+    public function save(Category $category): void
+    {
+        $this->entityManager->persist($category);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function delete(Category $category): void
+    {
+        $this->entityManager->remove($category);
+        $this->entityManager->flush();
+    }
 }

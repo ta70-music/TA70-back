@@ -2,49 +2,71 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Album;
+use App\Domain\Model\Album\AlbumRepositoryInterface;
+use App\Domain\Model\Album\Album;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Album|null find($id, $lockMode = null, $lockVersion = null)
- * @method Album|null findOneBy(array $criteria, array $orderBy = null)
- * @method Album[]    findAll()
- * @method Album[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class AlbumRepository
+ * @package App\Infrastructure\Repository
  */
-class AlbumRepository extends ServiceEntityRepository
+final class AlbumRepository implements AlbumRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * AlbumRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Album::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(Album::class);
     }
 
-    // /**
-    //  * @return Album[] Returns an array of Album objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $albumId
+     * @return Album
+     */
+    public function findById(int $albumId): ?Album
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($albumId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Album
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param Album $album
+     */
+    public function save(Album $album): void
+    {
+        $this->entityManager->persist($album);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Album $album
+     */
+    public function delete(Album $album): void
+    {
+        $this->entityManager->remove($album);
+        $this->entityManager->flush();
+    }
 }

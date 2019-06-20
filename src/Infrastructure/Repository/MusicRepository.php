@@ -2,49 +2,72 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Music;
+use App\Domain\Model\Music\MusicRepositoryInterface;
+use App\Domain\Model\Music\Music;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Music|null find($id, $lockMode = null, $lockVersion = null)
- * @method Music|null findOneBy(array $criteria, array $orderBy = null)
- * @method Music[]    findAll()
- * @method Music[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class MusicRepository
+ * @package App\Infrastructure\Repository
  */
-class MusicRepository extends ServiceEntityRepository
+final class MusicRepository implements MusicRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * ArticleRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Music::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(Article::class);
     }
 
-    // /**
-    //  * @return Music[] Returns an array of Music objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $articleId
+     * @return Article
+     */
+    public function findById(int $articleId): ?Article
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($articleId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Music
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param Article $article
+     */
+    public function save(Article $article): void
+    {
+        $this->entityManager->persist($article);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function delete(Article $article): void
+    {
+        $this->entityManager->remove($article);
+        $this->entityManager->flush();
+    }
 }

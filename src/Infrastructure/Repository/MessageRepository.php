@@ -2,49 +2,72 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Message;
+use App\Domain\Model\Message\MessageRepositoryInterface;
+use App\Domain\Model\Message\Message;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Message|null find($id, $lockMode = null, $lockVersion = null)
- * @method Message|null findOneBy(array $criteria, array $orderBy = null)
- * @method Message[]    findAll()
- * @method Message[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class MessageRepository
+ * @package App\Infrastructure\Repository
  */
-class MessageRepository extends ServiceEntityRepository
+final class MessageRepository implements MessageRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * MessageRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Message::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(Message::class);
     }
 
-    // /**
-    //  * @return Message[] Returns an array of Message objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $messageId
+     * @return Message
+     */
+    public function findById(int $messageId): ?Message
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($messageId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Message
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param Message $message
+     */
+    public function save(Message $message): void
+    {
+        $this->entityManager->persist($message);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Message $message
+     */
+    public function delete(Message $message): void
+    {
+        $this->entityManager->remove($message);
+        $this->entityManager->flush();
+    }
 }

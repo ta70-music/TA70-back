@@ -2,49 +2,71 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\Salon;
+use App\Domain\Model\Salon\Salon;
+use App\Domain\Model\Salon\SalonRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Salon|null find($id, $lockMode = null, $lockVersion = null)
- * @method Salon|null findOneBy(array $criteria, array $orderBy = null)
- * @method Salon[]    findAll()
- * @method Salon[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class SalonRepository
+ * @package App\Infrastructure\Repository
  */
-class SalonRepository extends ServiceEntityRepository
+final class SalonRepository implements SalonRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * SalonRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Salon::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(Salon::class);
     }
 
-    // /**
-    //  * @return Salon[] Returns an array of Salon objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $salonId
+     * @return Salon
+     */
+    public function findById(int $salonId): ?Salon
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($salonId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Salon
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param Salon $salon
+     */
+    public function save(Salon $salon): void
+    {
+        $this->entityManager->persist($salon);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param Salon $salon
+     */
+    public function delete(Salon $salon): void
+    {
+        $this->entityManager->remove($salon);
+        $this->entityManager->flush();
+    }
 }

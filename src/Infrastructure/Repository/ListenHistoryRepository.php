@@ -2,49 +2,71 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\ListenHistory;
+use App\Domain\Model\ListenHistory\ListenHistory;
+use App\Domain\Model\ListenHistory\ListenHistoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method ListenHistory|null find($id, $lockMode = null, $lockVersion = null)
- * @method ListenHistory|null findOneBy(array $criteria, array $orderBy = null)
- * @method ListenHistory[]    findAll()
- * @method ListenHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class ListenHistoryRepository
+ * @package App\Infrastructure\Repository
  */
-class ListenHistoryRepository extends ServiceEntityRepository
+final class ListenHistoryRepository implements ListenHistoryRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * ListenHistoryRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, ListenHistory::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(ListenHistory::class);
     }
 
-    // /**
-    //  * @return ListenHistory[] Returns an array of ListenHistory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $listenHistoryId
+     * @return ListenHistory
+     */
+    public function findById(int $listenHistoryId): ?ListenHistory
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($listenHistoryId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ListenHistory
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param ListenHistory $listenHistory
+     */
+    public function save(ListenHistory $listenHistory): void
+    {
+        $this->entityManager->persist($listenHistory);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param ListenHistory $listenHistory
+     */
+    public function delete(ListenHistory $listenHistory): void
+    {
+        $this->entityManager->remove($listenHistory);
+        $this->entityManager->flush();
+    }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Domain\Model\Article;
+namespace App\Domain\Model\User;
 
 /**
- * Interface ArticleRepositoryInterface
- * @package App\Domain\Model\Article
+ * Interface UserRepositoryInterface
+ * @package App\Domain\Model\User
  */
-interface ArticleRepositoryInterface
+interface UserRepositoryInterface
 {
 
     /**
-     * @param int $articleId
-     * @return Article
+     * @param int $userId
+     * @return User
      */
-    public function findById(int $articleId): ?Article;
+    public function findById(int $userId): ?User;
 
     /**
      * @return array
@@ -21,13 +21,13 @@ interface ArticleRepositoryInterface
     public function findAll(): array;
 
     /**
-     * @param Article $article
+     * @param User $user
      */
-    public function save(Article $article): void;
+    public function save(User $user): void;
 
     /**
-     * @param Article $article
+     * @param User $user
      */
-    public function delete(Article $article): void;
+    public function delete(User $user): void;
 
 }

@@ -2,49 +2,72 @@
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Model\SearchHistory;
+use App\Domain\Model\SearchHistory\SearchHistory;
+use App\Domain\Model\SearchHistory\SearchHistoryRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method SearchHistory|null find($id, $lockMode = null, $lockVersion = null)
- * @method SearchHistory|null findOneBy(array $criteria, array $orderBy = null)
- * @method SearchHistory[]    findAll()
- * @method SearchHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * Class SearchHistoryRepository
+ * @package App\Infrastructure\Repository
  */
-class SearchHistoryRepository extends ServiceEntityRepository
+final class SearchHistoryRepository implements SearchHistoryRepositoryInterface
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @var ObjectRepository
+     */
+    private $objectRepository;
+
+    /**
+     * SearchHistoryRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, SearchHistory::class);
+        $this->entityManager = $entityManager;
+        $this->objectRepository = $this->entityManager->getRepository(SearchHistory::class);
     }
 
-    // /**
-    //  * @return SearchHistory[] Returns an array of SearchHistory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $searchHistoryId
+     * @return SearchHistory
+     */
+    public function findById(int $searchHistoryId): ?SearchHistory
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->objectRepository->find($searchHistoryId);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?SearchHistory
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $this->objectRepository->findAll();
     }
-    */
+
+    /**
+     * @param SearchHistory $searchHistory
+     */
+    public function save(SearchHistory $searchHistory): void
+    {
+        $this->entityManager->persist($searchHistory);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param SearchHistory $searchHistory
+     */
+    public function delete(SearchHistory $searchHistory): void
+    {
+        $this->entityManager->remove($searchHistory);
+        $this->entityManager->flush();
+    }
+
 }
