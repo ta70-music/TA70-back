@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Domain\Model\Music;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

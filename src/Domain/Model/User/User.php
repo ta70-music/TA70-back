@@ -62,7 +62,7 @@ class User implements UserInterface
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User, mappedBy="user")
      */
     private $users;
 

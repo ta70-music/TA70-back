@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Domain\Model\LoginHistory;
 
 use Doctrine\ORM\Mapping as ORM;
 
