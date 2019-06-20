@@ -27,22 +27,22 @@ final class MusicRepository implements MusicRepositoryInterface
     private $objectRepository;
 
     /**
-     * ArticleRepository constructor.
+     * MusicRepository constructor.
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->objectRepository = $this->entityManager->getRepository(Article::class);
+        $this->objectRepository = $this->entityManager->getRepository(Music::class);
     }
 
     /**
-     * @param int $articleId
-     * @return Article
+     * @param int $musicId
+     * @return Music
      */
-    public function findById(int $articleId): ?Article
+    public function findById(int $musicId): ?Music
     {
-        return $this->objectRepository->find($articleId);
+        return $this->objectRepository->find($musicId);
     }
 
     /**
@@ -54,20 +54,20 @@ final class MusicRepository implements MusicRepositoryInterface
     }
 
     /**
-     * @param Article $article
+     * @param Music $music
      */
-    public function save(Article $article): void
+    public function save(Music $music): void
     {
-        $this->entityManager->persist($article);
+        $this->entityManager->persist($music);
         $this->entityManager->flush();
     }
 
     /**
-     * @param Article $article
+     * @param Music $music
      */
-    public function delete(Article $article): void
+    public function delete(Music $music): void
     {
-        $this->entityManager->remove($article);
+        $this->entityManager->remove($music);
         $this->entityManager->flush();
     }
 }

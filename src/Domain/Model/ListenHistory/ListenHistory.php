@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ListenHistoryRepository")
+ * Class ListenHistory
+ * @ORM\Entity
+ * @package App\Domain\Model\ListenHistory
  */
 class ListenHistory
 {
@@ -24,12 +26,12 @@ class ListenHistory
     private $Timestamp;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="listenHistories")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="listenHistories")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music", mappedBy="listenhistory")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music\Music", mappedBy="listenhistory")
      */
     private $musics;
 

@@ -5,7 +5,9 @@ namespace App\Domain\Model\Album;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AlbumRepository")
+ * Class Album
+ * @ORM\Entity
+ * @package App\Domain\Model\Album
  */
 class Album
 {

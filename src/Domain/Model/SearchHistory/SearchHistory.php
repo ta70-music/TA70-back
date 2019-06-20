@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SearchHistoryRepository")
+ * Class SearchHistory
+ * @ORM\Entity
+ * @package App\Domain\Model\SearchHistory
  */
 class SearchHistory
 {
@@ -29,7 +31,7 @@ class SearchHistory
     private $Research;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="searchHistories")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="searchHistories")
      */
     private $user;
 

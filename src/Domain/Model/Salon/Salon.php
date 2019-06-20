@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SalonRepository")
+ * Class Salon
+ * @ORM\Entity
+ * @package App\Domain\Model\Salon
  */
 class Salon
 {
@@ -24,12 +26,12 @@ class Salon
     private $Category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Model\Message", mappedBy="salon")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Message\Message", mappedBy="salon")
      */
     private $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="salons")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User\User", inversedBy="salons")
      */
     private $user;
 

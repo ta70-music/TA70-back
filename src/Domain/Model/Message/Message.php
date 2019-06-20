@@ -5,7 +5,9 @@ namespace App\Domain\Model\Message;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
+ * Class Message
+ * @ORM\Entity
+ * @package App\Domain\Model\Message
  */
 class Message
 {
@@ -22,12 +24,12 @@ class Message
     private $Content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User\User", inversedBy="messages")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Salon", inversedBy="message")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Salon\Salon", inversedBy="message")
      */
     private $salon;
 

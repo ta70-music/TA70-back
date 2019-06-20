@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MusicRepository")
+ * Class Music
+ * @ORM\Entity
+ * @package App\Domain\Model\Music
  */
 class Music
 {
@@ -29,22 +31,22 @@ class Music
     private $File;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="musics")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="musics")
      */
     private $User;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\ListenHistory", inversedBy="musics")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\ListenHistory\ListenHistory", inversedBy="musics")
      */
     private $listenhistory;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Category", mappedBy="music")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Category\Category", mappedBy="music")
      */
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Albums", mappedBy="music")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Album\Album", mappedBy="music")
      */
     private $albums;
 

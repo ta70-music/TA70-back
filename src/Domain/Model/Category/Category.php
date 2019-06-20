@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * Class Category
+ * @ORM\Entity
+ * @package App\Domain\Model\Category
  */
 class Category
 {
@@ -29,7 +31,7 @@ class Category
     private $Image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music", inversedBy="categories")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music\Music", inversedBy="categories")
      */
     private $music;
 

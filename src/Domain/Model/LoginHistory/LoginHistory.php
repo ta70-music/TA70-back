@@ -5,7 +5,9 @@ namespace App\Domain\Model\LoginHistory;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LoginHistoryRepository")
+ * Class LoginHistory
+ * @ORM\Entity
+ * @package App\Domain\Model\LoginHistory
  */
 class LoginHistory
 {
@@ -32,7 +34,7 @@ class LoginHistory
     private $Ip;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="loginHistories")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User\User", inversedBy="loginHistories")
      */
     private $user;
 
