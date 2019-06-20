@@ -51,11 +51,6 @@ class MusicTest extends WebTestCase
         $client = static::createClient();
         self::bootKernel();
 
-        // returns the real and unchanged service container
-        $container = self::$kernel->getContainer();
-        // gets the special container that allows fetching private services
-        $container = self::$container;
-
         $client->request('POST', '/musics', [
             'title' => 'test',
             'file' => 'test'
@@ -74,13 +69,9 @@ class MusicTest extends WebTestCase
         // gets the special container that allows fetching private services
         $container = self::$container;
 
-        $client->request('PUT', '/musics/1', [
-            'title' => 'test2',
-            'file' => 'test2'
-        ]);
-        $music = self::$container->get('doctrine')->getRepository(Music::class)->find(1);
+        $client->request('DELETE', '/musics/1');
+        $musics = self::$container->get('doctrine')->getRepository(Music::class)->findAll();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals('test2', $music->getTitle());
-        $this->assertEquals('test2', $music->getFile());
+        $this->assertEquals(2, sizeof($musics));
     }
 }

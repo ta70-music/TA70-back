@@ -83,4 +83,20 @@ class MusicController extends AbstractFOSRestController
 
     }
 
+    /**
+     * Lists all Musics.
+     * @Rest\Delete("/{id}")
+     *
+     * @return Response
+     */
+    public function deleteOne(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Music::class);
+        $music = $repository->find($id);
+        $em->remove($music);
+        $this->getDoctrine()->getManager()->flush();
+        return new Response('', 200);
+    }
+
 }
