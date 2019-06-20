@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
-use App\Entity\Music;
+use App\Domain\Model\Music;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,7 +29,7 @@ class SearchHistory
     private $Research;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="searchHistories")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="searchHistories")
      */
     private $user;
 

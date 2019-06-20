@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +19,7 @@ class Albums
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Music", inversedBy="albums")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music", inversedBy="albums")
      */
     private $music;
 

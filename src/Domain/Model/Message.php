@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,12 +22,12 @@ class Message
     private $Content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="messages")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Salon", inversedBy="message")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Salon", inversedBy="message")
      */
     private $salon;
 

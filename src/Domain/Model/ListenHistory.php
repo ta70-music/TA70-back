@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,12 +24,12 @@ class ListenHistory
     private $Timestamp;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="listenHistories")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="listenHistories")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="listenhistory")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music", mappedBy="listenhistory")
      */
     private $musics;
 

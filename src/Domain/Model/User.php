@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,42 +49,42 @@ class User
     private $Description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="users")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", mappedBy="user")
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LoginHistory", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\LoginHistory", mappedBy="user")
      */
     private $loginHistories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Message", mappedBy="user")
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Salon", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Salon", mappedBy="user")
      */
     private $salons;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ListenHistory", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\ListenHistory", mappedBy="user")
      */
     private $listenHistories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\SearchHistory", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\SearchHistory", mappedBy="user")
      */
     private $searchHistories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Music", mappedBy="User")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Music", mappedBy="User")
      */
     private $musics;
 

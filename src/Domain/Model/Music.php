@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,22 +29,22 @@ class Music
     private $File;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="musics")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User", inversedBy="musics")
      */
     private $User;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ListenHistory", inversedBy="musics")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\ListenHistory", inversedBy="musics")
      */
     private $listenhistory;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="music")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Category", mappedBy="music")
      */
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Albums", mappedBy="music")
+     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Albums", mappedBy="music")
      */
     private $albums;
 

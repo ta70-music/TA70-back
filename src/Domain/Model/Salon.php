@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,12 +24,12 @@ class Salon
     private $Category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="salon")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Message", mappedBy="salon")
      */
     private $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="salons")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="salons")
      */
     private $user;
 

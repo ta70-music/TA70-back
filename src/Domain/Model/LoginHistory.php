@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Domain\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,7 +32,7 @@ class LoginHistory
     private $Ip;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="loginHistories")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\User", inversedBy="loginHistories")
      */
     private $user;
 

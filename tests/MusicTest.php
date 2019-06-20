@@ -4,15 +4,13 @@ namespace Acme\Bundle\ApiBundle\Tests\Controller\Rest;
 
 
 use App\DataFixtures\AppFixtures;
-use App\Entity\Music;
-use App\Repository\MusicRepository;
+use App\Domain\Model\Music;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use function PHPSTORM_META\type;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-
 /**
  * CommentControllerTest
  */
