@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Domain\Model\LoginHistory\LoginHistory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -20,7 +21,8 @@ class LoginAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->headers->has('X-AUTH-TOKEN');
+        return 'app_login' === $request->attributes->get('_route')
+            && $request->isMethod('POST') && $request->headers->has('X-AUTH-TOKEN');
     }
 
     /**
@@ -43,8 +45,8 @@ class LoginAuthenticator extends AbstractGuardAuthenticator
         }
 
         // if a User object, checkCredentials() is called
-        return $this->em->getRepository(User::class)
-            ->findOneBy(['apiToken' => $apiToken]);
+        return $this->em->getRepository(LoginHistory::class)
+            ->findOneBy(['apiToken' => $apiToken])->getUser();
     }
 
     public function checkCredentials($credentials, UserInterface $user)
