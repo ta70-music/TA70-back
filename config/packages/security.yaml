@@ -19,6 +19,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginAuthenticator
+                    - App\Security\LoginFormAuthenticator
+                entry_point: App\Security\LoginFormAuthenticator
 
             # activate different ways to authenticate
 
