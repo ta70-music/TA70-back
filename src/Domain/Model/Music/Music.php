@@ -42,16 +42,16 @@ class Music
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\Album\Album", mappedBy="music")
+     * @ORM\OneToMany(targetEntity="App\Domain\Model\Album\Album", mappedBy="album")
      */
-    private $albums;
+    private $album;
 
     public function __construct()
     {
         $this->User = new ArrayCollection();
         $this->listenhistory = new ArrayCollection();
         $this->categories = new ArrayCollection();
-        $this->albums = new ArrayCollection();
+        $this->album = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,14 +140,14 @@ class Music
     }
 
     /**
-     * @return Collection|Albums[]
+     * @return Collection|Album[]
      */
     public function getAlbums(): Collection
     {
         return $this->albums;
     }
 
-    public function addAlbum(Albums $album): self
+    public function addAlbum(Album $album): self
     {
         if (!$this->albums->contains($album)) {
             $this->albums[] = $album;

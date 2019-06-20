@@ -2,7 +2,8 @@
 
 namespace App\Domain\Model\Album;
 
-use Doctrine\Common\Collections\Collection;
+use App\Domain\Model\Music\Music;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,9 +31,9 @@ class Album
     private $Image;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", inversedBy="musics")
+     * @ORM\ManyToOne(targetEntity="App\Domain\Model\Music\Music", inversedBy="albums")
      */
-    private $User;
+    private $music;
 
     public function getId(): ?int
     {
@@ -62,29 +63,16 @@ class Album
 
         return $this;
     }
-    /**
-     * @return Collection|User[]
-     */
-    public function getUser(): Collection
+
+    public function getMusic(): ?Music
     {
-        return $this->User;
+        return $this->music;
     }
 
-    public function addUser(User $user): self
+    public function setMusic(?Music $music): self
     {
-        if (!$this->User->contains($user)) {
-            $this->User[] = $user;
-        }
+        $this->music = $music;
 
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->User->contains($user)) {
-            $this->User->removeElement($user);
-        }
-
-        return $this;
+        return $music;
     }
 }
