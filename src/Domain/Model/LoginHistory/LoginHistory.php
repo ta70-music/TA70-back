@@ -34,7 +34,7 @@ class LoginHistory
     private $Ip;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
      private $apiToken;
 
