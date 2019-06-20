@@ -34,6 +34,12 @@ class LoginHistory
     private $Ip;
 
     /**
+     * @ORM\Column(type="string", unique=true, nullable=true)
+     */
+     private $apiToken;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\User\User", inversedBy="loginHistories")
      */
     private $user;
@@ -63,6 +69,17 @@ class LoginHistory
     public function setSuccess(bool $Success): self
     {
         $this->Success = $Success;
+
+        return $this;
+    }
+    public function getapiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setapiToken(string $apiToken): string
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }
