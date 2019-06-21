@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * Class UserRepository
  * @package App\Infrastructure\Repository
  */
-class UserRepository extends ServiceEntityRepository
+final class UserRepository implements UserRepositoryInterface
 {
     /**
      * @var EntityManagerInterface

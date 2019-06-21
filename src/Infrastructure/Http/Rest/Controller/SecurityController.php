@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Http\Rest\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,14 +12,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/login", name="app_login", methods={"POST"})
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request)
     {
-        $data = [
-            'message' => $authenticationUtils->getLastAuthenticationError()
-        ];
+        $user = $this->getUser();
 
-        return new JsonResponse($data, Response::HTTP_FORBIDDEN);;
+        return $this->json([
+            'username' => $user->getUsername(),
+            'roles' => $user->getRoles(),
+        ]);
     }
 }

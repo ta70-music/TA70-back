@@ -55,7 +55,7 @@ final class UserController extends FOSRestController
      * @return View
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function getUser(int $userId): View
+    public function getOneUser(int $userId): View
     {
         $user = $this->userService->getUser($userId);
 

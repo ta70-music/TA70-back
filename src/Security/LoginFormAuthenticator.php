@@ -106,7 +106,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('app_login');
+        $data = [
+            // you might translate this message
+            'message' => 'Authentication Required'
+        ];
+        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
     }
     /**
      * Called when authentication is needed, but it's not sent
