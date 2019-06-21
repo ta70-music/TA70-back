@@ -3,8 +3,11 @@
 namespace App\Security;
 
 use App\Domain\Model\LoginHistory\LoginHistory;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -13,7 +16,12 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class LoginAuthenticator extends AbstractGuardAuthenticator
 {
 
+    private $entityManager;
 
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
     /**
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning false will cause this authenticator
@@ -45,7 +53,7 @@ class LoginAuthenticator extends AbstractGuardAuthenticator
         }
 
         // if a User object, checkCredentials() is called
-        return $this->em->getRepository(LoginHistory::class)
+        return $this->entityManager->getRepository(LoginHistory::class)
             ->findOneBy(['apiToken' => $apiToken])->getUser();
     }
 
