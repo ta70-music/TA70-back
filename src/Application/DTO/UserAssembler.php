@@ -24,8 +24,19 @@ final class UserAssembler
             $user = new User();
         }
 
-        $user->setContent($userDTO->getContent());
-        $user->setTitle($userDTO->getTitle());
+        $user->setLastname($userDTO->getLastname());
+        $user->setFirstname($userDTO->getFirstname());
+        $user->setEmail($userDTO->getEmail());
+        $user->setPassword($userDTO->getPassword());
+        $user->setImage($userDTO->getImage());
+        $user->setRoles($userDTO->getRoles());
+        $user->addUser($userDTO->getUser());
+        $user->addLoginHistory($userDTO->getLoginHistory());
+        $user->addMessage($userDTO->getMessage());
+        $user->addSalon($userDTO->getSalon());
+        $user->addListenHistory($userDTO->getListenHistory());
+        $user->addSearchHistory($userDTO->getSearchHistory());
+        $user->addMusic($userDTO->getMusic());
 
         return $user;
     }
