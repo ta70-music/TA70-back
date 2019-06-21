@@ -63,6 +63,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", mappedBy="user")
+     * @var User $user
      */
     private $users;
 
@@ -402,7 +403,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->Email;
     }
 
     /**
