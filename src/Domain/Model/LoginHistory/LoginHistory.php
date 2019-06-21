@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model\LoginHistory;
 
+use App\Domain\Model\User\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +42,7 @@ class LoginHistory
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Domain\Model\User\User", inversedBy="loginHistories")
+     * @var User $user
      */
     private $user;
 
@@ -77,7 +79,7 @@ class LoginHistory
         return $this->apiToken;
     }
 
-    public function setapiToken(string $apiToken): string
+    public function setapiToken(string $apiToken): self
     {
         $this->apiToken = $apiToken;
 

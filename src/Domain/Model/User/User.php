@@ -2,6 +2,12 @@
 
 namespace App\Domain\Model\User;
 
+use App\Domain\Model\ListenHistory\ListenHistory;
+use App\Domain\Model\LoginHistory\LoginHistory;
+use App\Domain\Model\Message\Message;
+use App\Domain\Model\Music\Music;
+use App\Domain\Model\Salon\Salon;
+use App\Domain\Model\SearchHistory\SearchHistory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -63,6 +69,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Domain\Model\User\User", mappedBy="user")
+     * @var User $user
      */
     private $users;
 
@@ -402,7 +409,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->Email;
     }
 
     /**

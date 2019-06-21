@@ -61,6 +61,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
 
+        /* @var User $user */
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['Email' => $credentials['email']]);
 
         if (!$user) {
@@ -81,13 +82,13 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {
         $api_key = bin2hex(random_bytes(60));
         $data = [
-            'api_key' => api_key
+            'api_key' => $api_key
         ];
         $this->history->setSuccess(true);
         $this->history->setapiToken($api_key);
         $this->entityManager->persist($this->history);
         $this->entityManager->flush();
-        return new JsonResponse($data, Response::HTTP_SUCCES);
+        return new JsonResponse($data);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
