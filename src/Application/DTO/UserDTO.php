@@ -94,6 +94,14 @@ final class UserDTO
         $this->Password = $Password;
         $this->Image = $Image;
         $this->Description = $Description;
+        $this->user = $user;
+        $this->loginHistory = $loginHistory;
+        $this->message = $message;
+        $this->salon = $salon;
+        $this->listenHistory = $listenHistory;
+        $this->searchHistory = $searchHistory;
+        $this->music = $music;
+        $this->roles = $roles;
     }
 
     /**
