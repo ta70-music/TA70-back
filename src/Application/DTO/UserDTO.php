@@ -12,38 +12,94 @@ final class UserDTO
     /**
      * @var string
      */
-    private $title;
+    private $Firstname;
 
     /**
      * @var string
      */
-    private $content;
+    private $Lastname;
 
     /**
-     * UserDTO constructor.
-     * @param string $title
-     * @param string $content
+     * @var string
      */
-    public function __construct(string $title = '', string $content = '')
+    private $Email;
+
+    /**
+     * @var string
+     */
+    private $Password;
+
+    /**
+     * @var string
+     */
+    private $Image;
+
+    /**
+     * @var string
+     */
+    private $Description;
+
+    /**
+     * UserDTO constructor
+     * @param string $Firstname
+     * @param string $Lastname
+     */
+    public function __construct(string $Firstname = '', string $Lastname = '', string $Email = '', string $Password = '', string $Image = '', string $Description = '')
     {
-        $this->title = $title;
-        $this->content = $content;
+        $this->Firstname = $Firstname;
+        $this->Lastname = $Lastname;
+        $this->Email = $Email;
+        $this->Password = $Password;
+        $this->Image = $Image;
+        $this->Description = $Description;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getFirstname(): string
     {
-        return $this->title;
+        return $this->Firstname;
     }
 
     /**
      * @return string
      */
-    public function getContent(): string
+    public function getLastname(): string
     {
-        return $this->content;
+        return $this->Lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->Email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->Password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->Image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->Description;
     }
 
 }

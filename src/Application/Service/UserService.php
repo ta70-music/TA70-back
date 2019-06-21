@@ -50,6 +50,7 @@ final class UserService
         if (!$user) {
             throw new EntityNotFoundException('User with id '.$userId.' does not exist!');
         }
+        $user->setPassword('');
         return $user;
     }
 
@@ -58,7 +59,12 @@ final class UserService
      */
     public function getAllUsers(): ?array
     {
-        return $this->userRepository->findAll();
+        $users = $this->userRepository->findAll();
+        foreach ($users as $user)
+        {
+            $user->setPassword('');
+        }
+        return $users;
     }
 
     /**
